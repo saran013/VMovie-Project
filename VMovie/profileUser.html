@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <ons-page>
+        <ons-toolbar style="background-color:#7859ff;">
+            <ons-back-button onclick="backtohome()">Home</ons-back-button>
+            <div class="center">MY PROFILE</div>
+        </ons-toolbar>
+
+        <ons-card id="show-data" style="text-align:center;"></ons-card>
+
+
+        <section style="padding: 8px; text-align: center;">
+            <ons-button onclick="editProfile()" style="background-color:#7859ff;">แก้ไขโปรไฟล์</ons-button>&nbsp;&nbsp;
+            <!-- <ons-button id="btnLogout" onclick="btnLogout()" style="background-color: #FF0000;">ออกจากระบบ</ons-button> -->
+        </section>
+
+    </ons-page>
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+            authDomain: "vmovie-58dd1.firebaseapp.com",
+            databaseURL: "https://vmovie-58dd1.firebaseio.com",
+            projectId: "vmovie-58dd1",
+            storageBucket: "vmovie-58dd1.appspot.com",
+            messagingSenderId: "613052466514"
+        };
+
+        firebase.initializeApp(config);
+        var database = firebase.database();
+
+        var email = localStorage.getItem('email');
+        if (email) {
+            $('#email').html(email);
+        }
+        console.log(email);
+
+        var emailUser=email;
+        var uidUser;
+        database.ref('profile/data/user/').once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                var content = '';
+                snapshot.forEach(function (user) {
+                    var val = user.val();
+                   
+
+                    if (val.email==emailUser){
+                        console.log(user.key)
+                        uidUser = user.key;
+                        content += '<img style="height:120px;" src=' + val.imgProfile + '><br><br>';
+                        // content += '<ons-input type="file" id="fileInput"></ons-input>';
+                        content += '<ons-list>';
+                        content += '<ons-list-item>Name  :  ' + val.name + '</ons-list-item>';
+                        content += '<ons-list-item>Email  :  ' + val.email + '</ons-list-item>';
+                        content += '</ons-list>';
+                    }
+                });  
+                var theDiv = document.getElementById("show-data");
+                theDiv.innerHTML += content;
+            }
+        });
+
+
+        function editProfile() {
+            
+            localStorage.setItem("uidUser", uidUser);
+            window.location.href = "editProfile.html";
+        }
+
+
+        function btnLogout() {
+            firebase.auth().signOut()
+                .then(result => {
+                    // Sign-out successful.
+                    alert("Logout Success!")
+                    window.location.href = "login.html";
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    var errorMessage = error.message;
+                });
+        }
+
+    </script>
+
+    <script>
+        function backtohome() {
+            window.location = 'homeUser.html';
+        }
+    </script>
+</body>
+
+</html>

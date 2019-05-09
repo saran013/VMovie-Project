@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+</head>
+
+<body>
+  <ons-page>
+    <ons-toolbar style="background-color: #7859ff;">
+      <h5 class="center">Login</h5>
+    </ons-toolbar>
+    <ons-card style=" margin-top: 30%;">
+      
+      <img src="img/LogoVMovie.png" alt="Onsen UI" style="width: 25%; height: 25%; margin-left: 38% ">
+   
+      <div class="regisInput">
+        <br><br>
+        <ons-list modifier="inset">
+          <ul class="list">
+            <li class="list-item">
+              <div class="list-item__center">
+                <input type="email" id="email" class="text-input" placeholder="Email" value="admin@gmail.com">
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-item__center">
+                <input type="password" id="password" class="text-input" placeholder="Password" value="123456">
+              </div>
+            </li>
+
+          </ul>
+        </ons-list>
+        <br>
+        <ons-button onclick="btnLogin()" id="btnLogin" style="background-color: #7859ff; width: 40%; margin-left: auto; text-align: center; margin-left: 30%;">LOGIN</ons-button>
+      </div>
+      <!-- <section style="padding: 8px; text-align: center;">
+        <ons-button modifier="quiet" onclick="btnRegister()" id="btnLogin" style="color:#ff0000;">Register</ons-button>
+    </section> -->
+    </ons-card>
+    
+  </ons-page>
+
+  
+
+
+
+   
+<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+    authDomain: "vmovie-58dd1.firebaseapp.com",
+    databaseURL: "https://vmovie-58dd1.firebaseio.com",
+    projectId: "vmovie-58dd1",
+    storageBucket: "vmovie-58dd1.appspot.com",
+    messagingSenderId: "613052466514"
+  };
+  
+    firebase.initializeApp(config);
+
+    function btnLogin() {
+      email = document.getElementById("email").value
+      password = document.getElementById("password").value
+      firebase.auth().signInWithEmailAndPassword(email, password).then(function (resp) {
+        console.log(resp)
+        ons.notification.alert("Login success!")
+       
+        var uidAdmin= firebase.auth().currentUser.uid;
+
+                localStorage.setItem("uidAdmin", uidAdmin);
+                localStorage.setItem("email", email);
+
+        window.location.href = "home.html";
+        // window.location.href = "testHome.html";
+      }).catch(function (err) {
+        console.log(err)
+        ons.notification.alert(err.message)
+      })
+    }
+
+    // function btnRegister() {
+      
+    //     window.location.href = "Register.html";
+    //     // window.location.href = "testHome.html";
+    // }
+  </script>
+</body>
+
+</html>

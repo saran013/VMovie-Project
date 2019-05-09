@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VMovie</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
+</head>
+
+<body>
+    <ons-page>
+        <ons-toolbar style="background-color:#7859ff;">
+            <div class="left">
+                <a href="homeUser.html">
+                    &nbsp;&nbsp;<img src = "img/LogoVMovie.png" style="height:30px;width:35px">
+                </a>
+                
+            </div>
+        </ons-toolbar>
+
+
+        <ons-card style=" margin-top: 2%;" class="center">
+            <ons-button  style="width: 100%" class="center" id="categoryMovie"></ons-button><br>
+
+            <div>
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width:100%" id="ex-table">
+                    <thead>
+                        <ons-row id="show-data"
+                            style="text-align: center; padding-top: 5px;padding-bottom: 5px; width:100%;">
+
+                        </ons-row>
+                    </thead>
+                </table>
+            </div>
+
+        </ons-card>
+
+    </ons-page>
+
+
+
+
+
+    <script>
+        function Profile() {
+            window.location = 'profileUser.html';
+        }
+    </script>
+
+    <script>
+        function btnLogout() {
+            firebase.auth().signOut()
+                .then(result => {
+                    // Sign-out successful.
+                    alert("Logout Success!")
+                    window.location.href = "login.html";
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    var errorMessage = error.message;
+                });
+        }
+
+    </script>
+
+
+    <script>
+        var uidUser = localStorage.getItem('uidUser');
+        if (uidUser) {
+            $('#uidUser').html(uidUser);
+        }
+        console.log(uidUser);
+
+
+        function btnFeedback() {
+            localStorage.setItem("uidUser", uidUser);
+            window.location.href = "feedbackUser.html";
+        }
+
+    </script>
+
+
+    <script>
+        var email = localStorage.getItem('email');
+        if (email) {
+            $('#email').html(email);
+        }
+        console.log(email);
+
+        var uidUser = localStorage.getItem('uidUser');
+        if (uidUser) {
+            $('#uidUser').html(uidUser);
+        }
+        console.log(uidUser);
+    </script>
+
+
+
+    <script>
+        function btnLogout() {
+            firebase.auth().signOut()
+                .then(result => {
+                    // Sign-out successful.
+                    alert("Logout Success!")
+                    window.location.href = "userLogin.html";
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    var errorMessage = error.message;
+                });
+        }
+    </script>
+
+
+
+    // Initialize Firebase
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+            authDomain: "vmovie-58dd1.firebaseapp.com",
+            databaseURL: "https://vmovie-58dd1.firebaseio.com",
+            projectId: "vmovie-58dd1",
+            storageBucket: "vmovie-58dd1.appspot.com",
+            messagingSenderId: "613052466514"
+        };
+
+
+        firebase.initializeApp(config);
+        var database = firebase.database();
+
+
+        var categoryMovie = localStorage.getItem('categoryMovie');
+        if (categoryMovie) {
+            $('#categoryMovie').html(categoryMovie);
+        }
+        console.log(categoryMovie);
+
+
+        database.ref("Movies/").once('child_added', function (snapshot) {
+            if (snapshot.exists()) {
+                var content = '';
+                snapshot.forEach(function (Movie) {
+                    var val = Movie.val();
+                   
+
+                    if (categoryMovie == val.MovieType) {
+                        console.log("row", Movie.val());
+                        localStorage.setItem("email", email);
+                        content += '<a   href="dataNewMovie.html?id=' + Movie.key + '" style="width:33%;">';
+                        content += '<ons-card style="width:100%;">';
+
+                        // var idMovie = data.key;
+                        // localStorage.setItem("idMovie", idMovie);
+                        console.log('Movie id = ' + Movie.key);
+
+                        content += '<div style="width:100%;height:130px;">';
+                        content += '<img style="height:120px; width:85px; center" src=' + val.MovieImage + '><br>' + val.MovieName;
+                        content += '</div>';
+                        // content += '<ons-col><div class="center">' + val.nameMovie + '</div></ons-col>';
+                        // content += '<ons-col><div class="right"><a href="editmenuLogin.html?id=' + data.key + '"style="background-color:red" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ">Edit</a></div></ons-col>';
+                        content += '</ons-card>';
+                    }
+                })
+
+
+                var theDiv = document.getElementById("show-data");
+                theDiv.innerHTML += content;
+            }
+        })
+
+
+
+    </script>
+</body>
+
+</html>

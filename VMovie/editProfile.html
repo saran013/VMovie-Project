@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+
+
+</head>
+
+<body>
+
+
+    <ons-page>
+        <ons-toolbar style="background-color:#7859ff; width:100%">
+            <div class="left" id="page2.html">
+                <ons-back-button onclick="backtohome()">Home</ons-back-button>
+            </div>
+            <div class="center"></div>
+        </ons-toolbar>
+        <ons-card style="text-align:center;">
+            <div id="show-data" style="text-align:center;"></div><br>
+            <ons-input type="file" id="fileButton"></ons-input><br><br>
+
+            <div class="updateProfile">
+                <ons-list modifier="inset">
+                    <ul class="list">
+                        <li class="list-item">
+                            <div class="list-item__center">
+                                Name : &nbsp;<input type="text" id="name" class="text-input">
+                            </div>
+                        <li class="list-item">
+                            <div class="list-item__center">
+                                Email : &nbsp;<input type="email" id="email" class="text-input">
+                            </div>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-item__center">
+                                Password : &nbsp;<input type="password" id="password" class="text-input">
+                            </div>
+                        </li>
+                    </ul>
+                </ons-list>
+            </div><br>
+            <section style="padding: 8px; text-align: center;">
+                <ons-button id="btnUpdate" style="background-color:#7859ff">อัพเดทโปรไฟล์
+                </ons-button>&nbsp;&nbsp;
+                <!-- <ons-button id="btnLogout" onclick="btnLogout()" style="background-color: #FF0000;">ออกจากระบบ</ons-button> -->
+            </section>
+        </ons-card>
+
+    </ons-page>
+
+
+
+    <!--อัพเดทโปรไฟล์  -->
+    <script>
+        function backtohome() {
+            window.location = 'profileUser.html';
+        }
+    </script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+            authDomain: "vmovie-58dd1.firebaseapp.com",
+            databaseURL: "https://vmovie-58dd1.firebaseio.com",
+            projectId: "vmovie-58dd1",
+            storageBucket: "vmovie-58dd1.appspot.com",
+            messagingSenderId: "613052466514"
+        };
+
+        var imgProfile;
+        firebase.initializeApp(config);
+
+        var email = localStorage.getItem('email');
+        if (email) {
+            $('#email').html(email);
+        }
+        console.log(email);
+
+        var uidUser = localStorage.getItem('uidUser');
+                    if (uidUser) {
+                        $('#uidUser').html(uidUser);
+                    }
+                    console.log(uidUser);
+
+        var emailUser = email;
+        var database = firebase.database();
+
+        database.ref('profile/data/user/').once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                var content = '';
+                snapshot.forEach(function (user) {
+                    var val = user.val();
+                   
+
+                    if (val.email==emailUser){
+
+
+                        content += '<img style="height:120px;" src=' + val.imgProfile + '><br><br>';
+                        document.getElementById("name").value = "" + val.name;
+                        document.getElementById("email").value = "" + val.email;
+                        document.getElementById("password").value = "" + val.password;
+
+                        var fileButton = document.getElementById("fileButton");
+                        fileButton.addEventListener('change', function (e) {
+                            var file = e.target.files[0];
+                            var storageRef = firebase.storage().ref(file.name);
+                            storageRef.put(file);
+                            imgProfile = "https://firebasestorage.googleapis.com/v0/b/" + config["storageBucket"] + "/o/" + file.name + "?alt=media";
+                            console.log(imgProfile);
+                        });
+
+                        document.getElementById("btnUpdate").onclick = function (e) {
+
+                            var name = document.getElementById('name').value;
+                            var email = document.getElementById('email').value;
+                            var password = document.getElementById('password').value;
+                            var rootRef = firebase.database().ref();
+                            var storesRef = rootRef.child('profile/data/user/' + uidUser);
+                            var newStoreRef = storesRef.push();
+                            storesRef.update({
+                                imgProfile: imgProfile,
+                                name: name,
+                                email: email,
+                                password: password
+                            });
+
+                            alert('Update Success')
+                            window.location.href = "profileUser.html";
+                        }
+                    }
+                });
+                var theDiv = document.getElementById("show-data");
+                theDiv.innerHTML += content;
+                //$('#show-data').append(content);
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

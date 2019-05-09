@@ -1,0 +1,42 @@
+.setCard{
+    margin-top: 5pc;
+}
+
+.setImgLogin{
+    display: block;
+    width: 15pc;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #f1f4f7;
+}
+
+.setImgProfile{
+    display: block;
+    width: 15pc;
+    padding-top: 1pc;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.EditProfileAdmin{
+    padding-top: 1pc;
+}
+
+.setCardBody{
+    width: 100%;
+}
+
+.imgMovieBeforeSave{
+    display: block;
+    width: 10pc;
+    height: 15pc;
+}
+
+.shownewImgProfileAdmin{
+    display: block;
+    width: 10pc;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,193 @@
+<html>
+
+<head>
+    <title>VM</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="add.js"></script> -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="js/admin.js"></script>
+
+</head>
+
+<body>
+    <ons-page>
+        <ons-toolbar style="background-color:#7859ff;">
+            <div class="left">
+                <a href="home.html">
+                    &nbsp;&nbsp;<i class="fa fa-reply" aria-hidden="true" style="color:white; font-size: 20px;"></i>
+                </a>
+            </div>
+        </ons-toolbar>
+
+
+        <!-- Modal -->
+
+        <div class="container-fluid">
+            <br>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Movie</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <center>
+                                <img id="imgMovie" class="imgMovieBeforeSave"></center>
+                            <input type="file" class="form-control-file" id="fileButton">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="movieName" placeholder="ชื่อหนัง">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="movieLength" placeholder="ความยาว">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="movieDirector" placeholder="Director">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="movieScore" placeholder="คะแนน">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="movieResume" placeholder="เรื่องย่อ"
+                                aria-label="With textarea"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="movieLink" placeholder="link ตัวอย่างหนัง">
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label for="movieType">กรุณาเลือกประเภทหนัง</label>
+                                <select class="form-control" id="movieType">
+                                    <option>Action</option>
+                                    <option>Adventure </option>
+                                    <option>Animation</option>
+                                    <option>Fantasy</option>
+                                    <option>Comedy</option>
+                                    <option>Romance</option>
+                                    <option>Horror</option>
+                                    <option>Drama</option>
+                                    <option>SciFi</option>
+                                </select>
+                            </div>
+                        </form>
+                        <form>
+                            <div class="form-group">
+                                <label for="movieSelect">กรุณาระบุหนัง</label>
+                                <select class="form-control" id="movieSelect">
+                                    <option>NewMovie</option>
+                                    <option>TopWeek</option>
+                                </select>
+                            </div>
+                        </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAddMovie()" id="saveAddMovie">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script> -->
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+                authDomain: "vmovie-58dd1.firebaseapp.com",
+                databaseURL: "https://vmovie-58dd1.firebaseio.com",
+                projectId: "vmovie-58dd1",
+                storageBucket: "vmovie-58dd1.appspot.com",
+                messagingSenderId: "613052466514"
+            };
+            firebase.initializeApp(config);
+            var movieImage;
+            var database = firebase.database();
+            
+
+            var filename = document.getElementById('fileButton');
+            filename.onchange = function () {
+                var files = filename.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function () {
+                    var result = reader.result;
+                    document.getElementById('imgMovie').src = result;
+                };
+            };
+
+            //add movie
+            var fileButton = document.getElementById("fileButton");
+                        fileButton.addEventListener('change', function (e) {
+                            var file = e.target.files[0];
+                            var storageRef = firebase.storage().ref(file.name);
+                            storageRef.put(file);
+                            movieImage = "https://firebasestorage.googleapis.com/v0/b/" + config["storageBucket"] + "/o/" + file.name + "?alt=media";
+                            console.log(movieImage);
+                        });
+
+            function saveAddMovie() {
+                var movieName = document.getElementById('movieName').value;
+                var movieLength = document.getElementById('movieLength').value;
+                var movieDirector = document.getElementById('movieDirector').value;
+                var movieScore = document.getElementById('movieScore').value;
+                var movieResume = document.getElementById('movieResume').value;
+                var movieLink = document.getElementById('movieLink').value;
+                var movieType = document.getElementById('movieType').value;
+                var movieSelect = document.getElementById('movieSelect').value;
+                var rootRef = firebase.database().ref();
+                var storesRef = rootRef.child('Movies/Movie/');
+                var newStoreRef = storesRef.push();
+                newStoreRef.set({
+                    MovieImage: movieImage,
+                    MovieName: movieName,
+                    MovieLength: movieLength,
+                    MovieDirector: movieDirector,
+                    MovieScore: movieScore,
+                    MovieResume: movieResume,
+                    MovieLink: movieLink,
+                    MovieType: movieType,
+                    MovieSelect: movieSelect
+                })
+                alert("Add movie success!")
+                window.location.href = "home.html"
+            }
+
+
+        </script>
+</body>
+
+</html>

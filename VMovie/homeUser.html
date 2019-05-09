@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VMovie</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
+    <script src="js/user.js"></script>
+</head>
+
+<body>
+    <ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+            <ons-page>
+                <ons-list>
+                    
+                    <ons-list-item onclick="btnHome()" tappable>
+                        โฮม
+                    </ons-list-item>
+                    <!-- <ons-list-item onclick="btnNewmovie()" tappable>
+                        หนังมาใหม่
+                    </ons-list-item> -->
+
+                    <ons-list-item onclick="btnAction()" tappable>
+                        แอคชั่น
+                    </ons-list-item>
+                    <ons-list-item onclick="btnAdventure()" tappable>
+                        ผจญภัย
+                    </ons-list-item>
+                    <ons-list-item onclick="btnScifi()" tappable>
+                        วิทยาศาสตร์
+                    </ons-list-item>
+                    <ons-list-item onclick="btnFantasy()" tappable>
+                        แฟนตาซี
+                    </ons-list-item>
+                    <ons-list-item onclick="btnComedy()" tappable>
+                        ตลก/ขำขัน
+                    </ons-list-item>
+                    <ons-list-item onclick="btnRomance()" tappable>
+                        รัก/โรแมนติก
+                    </ons-list-item>
+                    <ons-list-item onclick="btnHorror()" tappable>
+                        สยองขวัญ
+                    </ons-list-item>
+                    <ons-list-item onclick="btnDrama()" tappable>
+                        ดราม่า
+                    </ons-list-item>
+                    <ons-list-item onclick="btnAnimation()" tappable>
+                        การ์ตูน/แอนิเมชัน
+                    </ons-list-item>
+                    
+                    <hr style="margin-left: 10%" width="80%" size="3">
+
+                    <ons-list-item class="ico" onclick="btnProfile()" tappable>
+                        <ons-icon icon="md-face" size="15px"> &nbsp; Profile
+                        </ons-icon>
+                    </ons-list-item>
+                    <ons-list-item onclick="btnFeedback()" tappable>
+                        <ons-icon icon="ion-calendar" size="15px"> &nbsp; Feedback box
+                        </ons-icon>
+                    </ons-list-item>
+
+                    <ons-list-item onclick="btnLogout()" tappable>
+                        <i class="fa fa-sign-out"> </i> &nbsp;&nbsp; Sign out
+
+                    </ons-list-item>
+                    
+
+
+
+                </ons-list>
+            </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+    </ons-splitter>
+
+
+    <template id="home.html">
+        <ons-page>
+            <ons-toolbar style="background-color: #7859ff; width: 100%; height: 8%; ">
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu" style="color:white;"></ons-icon>
+                    </ons-toolbar-button>
+                    <img src = "img/LogoVMovie.png"  style="height:30px;width:35px"> VMovie &nbsp; &nbsp;&nbsp;
+
+                    <!-- <ons-search-input onchange="ons.notification.alert('Searched for: ' + this.value)"
+                        style="width: 100%;height:70%;margin-top: 5px ">
+                    </ons-search-input> -->
+                </div>
+            </ons-toolbar>
+
+            <ons-card style=" margin-top: 2%;" class="center">
+                <ons-button onclick="newMovie()" style="width: 100%" class="center">หนังมาใหม่</ons-button><br>
+
+                <div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width:100%" id="ex-table">
+                        <thead>
+                            <ons-row id="show-data"
+                                style="text-align: center; padding-top: 5px;padding-bottom: 5px; width:100%;">
+
+                            </ons-row>
+                        </thead>
+                    </table>
+                </div>
+                <br><br>
+                <ons-button onclick="changeTab()" style="width: 100%" class="center">หนังดีประจำสัปดาห์</ons-button><br>
+
+                <div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width:100%" id="ex-table">
+                        <thead>
+                            <ons-row id="show-data2"
+                                style="text-align: center; padding-top: 5px;padding-bottom: 5px; width:100%;">
+
+                            </ons-row>
+                        </thead>
+                    </table>
+                </div>
+
+            </ons-card>
+
+        </ons-page>
+    </template>
+
+    <template id="newMovie.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Settings
+                </div>
+            </ons-toolbar>
+        </ons-page>
+    </template>
+
+    <template id="feedback.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="fn.open()">
+                        <ons-icon icon="md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    About
+                </div>
+            </ons-toolbar>
+        </ons-page>
+    </template>
+
+
+    <script>
+        function btnLogout() {
+            firebase.auth().signOut()
+                .then(result => {
+                    // Sign-out successful.
+                    alert("Logout Success!")
+                    window.location.href = "login.html";
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    var errorMessage = error.message;
+                });
+        }
+
+    </script>
+
+
+    <script>
+        var uidUser = localStorage.getItem('uidUser');
+        if (uidUser) {
+            $('#uidUser').html(uidUser);
+        }
+        console.log(uidUser);
+
+        var email = localStorage.getItem('email');
+        if (email) {
+            $('#email').html(email);
+        }
+        console.log(email);
+
+
+        function btnFeedback(){
+            localStorage.setItem("uidUser", uidUser);
+            localStorage.setItem("email", email);
+            window.location.href = "feedbackUser.html";
+        }
+
+    </script>
+
+
+
+
+    <script>
+        var email = localStorage.getItem('email');
+        if (email) {
+            $('#email').html(email);
+        }
+        console.log(email);
+
+        var uidUser = localStorage.getItem('uidUser');
+        if (uidUser) {
+            $('#uidUser').html(uidUser);
+        }
+        console.log(uidUser);
+    </script>
+
+    <script>
+        function btnLogout() {
+            firebase.auth().signOut()
+                .then(result => {
+                    // Sign-out successful.
+                    alert("Logout Success!")
+                    window.location.href = "userLogin.html";
+                })
+                .catch(error => {
+                    // Handle Errors here.
+                    var errorMessage = error.message;
+                });
+        }
+    </script>
+
+
+
+    // Initialize Firebase
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+            authDomain: "vmovie-58dd1.firebaseapp.com",
+            databaseURL: "https://vmovie-58dd1.firebaseio.com",
+            projectId: "vmovie-58dd1",
+            storageBucket: "vmovie-58dd1.appspot.com",
+            messagingSenderId: "613052466514"
+        };
+
+
+        firebase.initializeApp(config);
+        var database = firebase.database();
+
+
+        var categoryMovie = "NewMovie";
+
+        database.ref("Movies/").once('child_added', function (snapshot) {
+            if (snapshot.exists()) {
+                var content = '';
+                snapshot.forEach(function (Movie) {
+                    var val = Movie.val();
+                    console.log("row", Movie.val());
+
+                    if (categoryMovie == val.MovieSelect) {
+
+                        content += '<a   href="dataNewMovie.html?id=' + Movie.key + '" style="width:33%;">';
+                        content += '<ons-card style="width:100%;height:100%">';
+
+                        // var idMovie = data.key;
+                        // localStorage.setItem("idMovie", idMovie);
+                        console.log('Movie id = ' + Movie.key);
+
+
+                        content += '<div style="width:100%;height:130px;">';
+                        content += '<img style="height:120px; width:100%; center" src=' + val.MovieImage + '><br>' + val.MovieName;
+                        content += '</div>';
+                        // content += '<ons-col><div class="center">' + val.nameMovie + '</div></ons-col>';
+                        // content += '<ons-col><div class="right"><a href="editmenuLogin.html?id=' + data.key + '"style="background-color:red" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ">Edit</a></div></ons-col>';
+                        content += '</ons-card>';
+                    }
+                })
+
+
+                var theDiv = document.getElementById("show-data");
+                theDiv.innerHTML += content;
+            }
+        })
+
+
+
+        var categoryMovie2 = "TopWeek";
+
+        database.ref("Movies/").once('child_added', function (snapshot) {
+            if (snapshot.exists()) {
+                var content = '';
+                snapshot.forEach(function (Movie) {
+                    var val = Movie.val();
+                    console.log("row", Movie.val());
+
+                    if (categoryMovie2 == val.MovieSelect) {
+
+                        content += '<a   href="dataNewMovie.html?id=' + Movie.key + '" style="width:33%;">';
+                        content += '<ons-card style="width:100%;height:100%">';
+
+                        console.log('Movie id = ' + Movie.key);
+                        content += '<div style="width:90%;height:130px;center">';
+                        content += '<img style="height:120px; width:100%; center" src=' + val.MovieImage + '><br>' + val.MovieName;
+                        content += '</div>';
+                        // content += '<ons-col><div class="center">' + val.nameMovie + '</div></ons-col>';
+                        // content += '<ons-col><div class="right"><a href="editmenuLogin.html?id=' + data.key + '"style="background-color:red" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ">Edit</a></div></ons-col>';
+                        content += '</ons-card>';
+                    }
+                })
+
+
+                var theDiv = document.getElementById("show-data2");
+                theDiv.innerHTML += content;
+            }
+        })
+
+    </script>
+</body>
+
+</html>

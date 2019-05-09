@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Admin Profile</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="adminHome.html">Home</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModalScrollable">Add Movie</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="adminProfile.html">Profile<span class="sr-only">(current)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="feedbackAdmin.html">Feedback Box</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <div id="show-listMovie">
+    </div>
+
+
+
+    
+        <br>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Add Movie</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <!-- <div class="form-group">
+                                    <center>
+                                        <img id="imgPoster" class="imgPosterBeforeSave"></center>
+                                    <input type="file" class="form-control-file" id="posterImg">
+                                </div> -->
+                            <div class="form-group">
+                                <center>
+                                    <img id="imgMovie" class="imgMovieBeforeSave"></center>
+                                <input type="file" class="form-control-file" id="movieImg">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="movieName" placeholder="ชื่อหนัง">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="movieLength" placeholder="ความยาว">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="movieDirector" placeholder="Director">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="movieScore" placeholder="คะแนน">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="movieResume" placeholder="เรื่องย่อ"
+                                    aria-label="With textarea"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="movieLink" placeholder="link ตัวอย่างหนัง">
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <label for="movieType">กรุณาเลือกประเภทหนัง</label>
+                                    <select class="form-control" id="movieType">
+                                        <option>fantasy</option>
+                                        <option>comedy</option>
+                                        <option>romance</option>
+                                        <option>horror</option>
+                                        <option>drama</option>
+                                        <option>action</option>
+                                        <option>scifi</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <form>
+                                <div class="form-group">
+                                    <label for="movieSelect">กรุณาระบุหนัง</label>
+                                    <select class="form-control" id="movieSelect">
+                                        <option>NewMovie</option>
+                                        <option>TopWeek</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="saveAddMovie()">Save
+                            changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div class="card border-primary" id="dataProfileUser">
+
+        </div>
+
+
+        <!-- Modal Edit Profile -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Profile Admin</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <img id="newImgProfileAdmin" class="shownewImgProfileAdmin">
+                        <div id="dataProfileUserEdit"></div>
+                        <div class="form-group EditProfileAdmin">
+                            <input type="text" class="form-control" id="editAdminName">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="btnSaveEditProfileAdmin()"
+                            id="btnSaveEditProfileAdmin">Save changes</button>
+                    </div>
+                </div>
+            </div>
+       
+
+        <script>
+            var filename = document.getElementById('movieImg');
+            filename.onchange = function () {
+                var files = filename.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function () {
+                    var result = reader.result;
+                    document.getElementById('imgMovie').src = result;
+                };
+            };
+        </script>
+
+        <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDRm2LN8u9TgQEGxpSjoyC2KMZzbvU-CeI",
+                authDomain: "vmovie-58dd1.firebaseapp.com",
+                databaseURL: "https://vmovie-58dd1.firebaseio.com",
+                projectId: "vmovie-58dd1",
+                storageBucket: "vmovie-58dd1.appspot.com",
+                messagingSenderId: "613052466514"
+            };
+
+            firebase.initializeApp(config);
+
+            var database = firebase.database();
+            var key;
+            var ProfileImage;
+
+            var email = localStorage.getItem('adminEmail');
+            if (email) {
+                $('#adminEmail').html(email);
+            }
+            console.log(email);
+
+
+            //Profile
+
+            database.ref("admin/users/").once('value', function (snapshot) {
+
+                //Show data profile user
+                if (snapshot.exists()) {
+                    var content = '';
+
+                    snapshot.forEach(function (users) {
+                        var val = users.val();
+
+                        if (email == val.adminEmail) {
+                            content += '<img src=' + val.ProfileImage + ' class="card-img-top setImgProfile">';
+                            content += '<div class="card-body">';
+                            content += '<h5 class="card-title">' + val.adminName + '</h5>';
+                            content += '<p class="card-text">' + val.adminEmail + '</p>';
+                            content += '<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">Edit Profile</button>';
+                            content += '</div>';
+                        }
+                    })
+                    var theDiv = document.getElementById("dataProfileUser");
+                    theDiv.innerHTML += content;
+                }
+
+                //Show data profile user edit
+                if (snapshot.exists()) {
+                    var content = '';
+
+                    snapshot.forEach(function (users) {
+                        var val = users.val();
+
+                        if (email == val.adminEmail) {
+                            key = users.key;
+                            console.log("Key = ", key)
+
+                            content += '<label for="exampleFormControlFile1">New image input</label>';
+                            content += '<input type="file" class="form-control-file EditProfileAdmin" id="imgEditProfileAdmin">';
+                            document.getElementById("editAdminName").value = "" + val.adminName;
+                        }
+                    })
+                    var theDiv = document.getElementById("dataProfileUserEdit");
+                    theDiv.innerHTML += content;
+                }
+
+                //Show image edit before update
+                var filename = document.getElementById('imgEditProfileAdmin');
+                filename.onchange = function () {
+                    var files = filename.files[0];
+                    var reader = new FileReader();
+                    reader.readAsDataURL(files);
+                    reader.onload = function () {
+                        var result = reader.result;
+                        document.getElementById('newImgProfileAdmin').src = result;
+                    };
+                };
+
+                var fileButton = document.getElementById("imgEditProfileAdmin");
+                fileButton.addEventListener('change', function (e) {
+                    var file = e.target.files[0];
+                    var storageRef = firebase.storage().ref(file.name);
+                    storageRef.put(file);
+                    ProfileImage = "https://firebasestorage.googleapis.com/v0/b/" + config["storageBucket"] + "/o/" + file.name + "?alt=media";
+                    console.log(ProfileImage);
+                })
+
+                document.getElementById("btnSaveEditProfileAdmin").onclick = function (e) {
+                    var adminName = document.getElementById('editAdminName').value;
+                    var rootRef = firebase.database().ref();
+                    var storesRef = rootRef.child('admin/users/' + key);
+                    storesRef.update({
+                        ProfileImage: ProfileImage,
+                        adminName: adminName
+                    });
+                    alert('Update Success')
+                    window.location.href = "adminProfile.html";
+                }
+
+            })
+
+
+
+            var movieImage;
+
+            var filename = document.getElementById('movieImg');
+            filename.onchange = function () {
+                var files = filename.files[0];
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function () {
+                    var result = reader.result;
+                    document.getElementById('imgMovie').src = result;
+                };
+            };
+
+
+
+
+
+            //add movie
+            var fileButton = document.getElementById("movieImg");
+            fileButton.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var storageRef = firebase.storage().ref(file.name);
+                storageRef.put(file);
+                movieImage = "https://firebasestorage.googleapis.com/v0/b/" + config["storageBucket"] + "/o/" + file.name + "?alt=media";
+                console.log(movieImage)
+            });
+
+            function saveAddMovie() {
+                var movieName = document.getElementById('movieName').value;
+                var movieLength = document.getElementById('movieLength').value;
+                var movieDirector = document.getElementById('movieDirector').value;
+                var movieScore = document.getElementById('movieScore').value;
+                var movieResume = document.getElementById('movieResume').value;
+                var movieLink = document.getElementById('movieLink').value;
+                var movieType = document.getElementById('movieType').value;
+                var movieSelect = document.getElementById('movieSelect').value;
+                var rootRef = firebase.database().ref();
+                var storesRef = rootRef.child('Movies/Movie/');
+                var newStoreRef = storesRef.push();
+                newStoreRef.set({
+                    MovieImage: movieImage,
+                    MovieName: movieName,
+                    MovieLength: movieLength,
+                    MovieDirector: movieDirector,
+                    MovieScore: movieScore,
+                    MovieResume: movieResume,
+                    MovieLink: movieLink,
+                    MovieType: movieType,
+                    MovieSelect: movieSelect
+                })
+                alert("Add movie success!")
+                window.location.reload();
+            }
+
+
+            //showlistMovie
+
+
+            database.ref("Movies/").once('child_added', function (snapshot) {
+                if (snapshot.exists()) {
+                    var content = '';
+                    snapshot.forEach(function (Movie) {
+                        var val = Movie.val();
+                        console.log("row", Movie.val());
+
+                        content += '<a   href="dataNewMovie.html?id=' + Movie.key + '" style="width:33%;">';
+                        content += '<ons-card style="width:100%;">';
+
+                        console.log('Movie id = ' + Movie.key);
+                        content += '<ons-card>';
+                        content += '<div style="width:100%;height:130px;"><img style="height:80px; width:50px; center" src=' + val.MovieImage +'>'+ val.MovieName + '</div>';
+                        // content += '<ons-col><div class="center">' + val.nameMovie + '</div></ons-col>';
+                        // content += '<ons-col><div class="right"><a href="editmenuLogin.html?id=' + data.key + '"style="background-color:red" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent ">Edit</a></div></ons-col>';
+                        content += '</ons-card>';
+
+                    })
+
+
+                    var theDiv = document.getElementById("show-listMovie");
+                    theDiv.innerHTML += content;
+                }
+            })
+        </script>
+</body>
+
+</html>
